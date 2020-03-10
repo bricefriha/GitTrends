@@ -173,7 +173,24 @@ namespace GitTrends
             //Display Text
             await Task.Delay(500);
 
-            await NavigateToRepositoryPage();
+            // Get github token
+            var token = await GitHubAuthenticationService.GetGitHubToken();
+
+            // If the app is run for the first time
+            if (GitHubAuthenticationService.Alias != DemoDataConstants.Alias
+                && (string.IsNullOrWhiteSpace(token.AccessToken) || string.IsNullOrWhiteSpace(GitHubAuthenticationService.Alias)))
+            {
+                AnalyticsService.Track("First run welcome page shown");
+
+                // Show welcome page
+                await NavigateToWelcomePage();
+            }
+            else
+            {
+                // Show repository page
+                await NavigateToRepositoryPage();
+
+            }
 #else
             if (e.IsInitializationSuccessful)
             {
@@ -216,6 +233,16 @@ namespace GitTrends
                     using var scope = ContainerService.Container.BeginLifetimeScope();
                     Application.Current.MainPage = new BaseNavigationPage(scope.Resolve<RepositoryPage>());
                 });
+            }
+            Task NavigateToWelcomePage()
+            {
+                return MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    using var scope = ContainerService.Container.BeginLifetimeScope();
+
+                    Application.Current.MainPage = scope.Resolve<WelcomePage>();
+                });
+                
             }
         }
     }

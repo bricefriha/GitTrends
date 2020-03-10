@@ -69,25 +69,10 @@ namespace GitTrends
         {
             base.OnAppearing();
 
-            if (Content is RefreshView refreshView
-                        && refreshView.Content is CollectionView collectionView
-                        && IsNullOrEmpty(collectionView.ItemsSource))
-            {
-                var token = await GitHubAuthenticationService.GetGitHubToken();
+            var refreshView = (RefreshView)Content;
 
-                if (GitHubAuthenticationService.Alias != DemoDataConstants.Alias
-                    && (string.IsNullOrWhiteSpace(token.AccessToken) || string.IsNullOrWhiteSpace(GitHubAuthenticationService.Alias)))
-                {
-                    var shouldNavigateToSettingsPage = await DisplayAlert(GitHubUserNotFoundConstants.Title, GitHubUserNotFoundConstants.Description, GitHubUserNotFoundConstants.Accept, GitHubUserNotFoundConstants.Decline);
-
-                    if (shouldNavigateToSettingsPage)
-                        await NavigateToSettingsPage();
-                }
-                else
-                {
-                    refreshView.IsRefreshing = true;
-                }
-            }
+            refreshView.IsRefreshing = true;
+            
 
             static bool IsNullOrEmpty(in IEnumerable? enumerable) => !enumerable?.GetEnumerator().MoveNext() ?? true;
         }
@@ -123,6 +108,14 @@ namespace GitTrends
 
             var trendsPage = scope.Resolve<TrendsPage>(new TypedParameter(typeof(Repository), repository));
             return MainThread.InvokeOnMainThreadAsync(() => Navigation.PushAsync(trendsPage));
+        }
+
+        Task NavigateToWelcomePage()
+        {
+            using var scope = ContainerService.Container.BeginLifetimeScope();
+
+            var welcomePage = scope.Resolve<WelcomePage>();
+            return MainThread.InvokeOnMainThreadAsync(() => Navigation.PushAsync(welcomePage));
         }
 
         async void HandleSettingsToolbarItem(object sender, EventArgs e)
