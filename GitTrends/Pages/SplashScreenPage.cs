@@ -196,7 +196,24 @@ namespace GitTrends
             {
                 await ChangeLabelText("Let's go!");
 
-                await NavigateToRepositoryPage();
+                // Get github token
+                var token = await GitHubAuthenticationService.GetGitHubToken();
+
+                // If the app is run for the first time
+                if (GitHubAuthenticationService.Alias != DemoDataConstants.Alias
+                    && (string.IsNullOrWhiteSpace(token.AccessToken) || string.IsNullOrWhiteSpace(GitHubAuthenticationService.Alias)))
+                {
+                    AnalyticsService.Track("First run welcome page shown");
+
+                    // Show welcome page
+                    await NavigateToWelcomePage();
+                }
+                else
+                {
+                    // Show repository page
+                    await NavigateToRepositoryPage();
+
+                }
             }
             else
             {
@@ -236,7 +253,7 @@ namespace GitTrends
             }
             Task NavigateToWelcomePage()
             {
-                return MainThread.InvokeOnMainThreadAsync(async () =>
+                return MainThread.InvokeOnMainThreadAsync( () =>
                 {
                     using var scope = ContainerService.Container.BeginLifetimeScope();
 
