@@ -14,19 +14,7 @@ namespace GitTrends
     };
     public class WelcomeViewModel : BaseViewModel
     {
-        private ObservableCollection<StackLayout> _carouselItems;
-        public ObservableCollection<StackLayout> CarouselItems
-        {
-            get
-            {
-                return _carouselItems;
-            }
-            set
-            {
-                _carouselItems = value;
-                OnPropertyChanged();
-            }
-        }
+       
         private ObservableCollection<Section> _sections;
         public ObservableCollection<Section> Sections
         {
@@ -54,8 +42,11 @@ namespace GitTrends
                 },
                 new Section
                 {
-                    Header = "How to use the charts",
-                    ImageUrl = "",
+                    Header = "Get an overview of your repos!",
+                    ImageUrl = "https://user-images.githubusercontent.com/13558917/75208368-5091ca80-5730-11ea-8602-8c63244bf229.gif",
+                    Content = "Here you can get charts which show all traffics on your repos:\n\n" +
+                                " - Zoom in/out to see accurately what you need to know\n\n" +
+                                " - A long press on the chart allow you to see a precise numeric value ",
                 },
                 new Section
                 {

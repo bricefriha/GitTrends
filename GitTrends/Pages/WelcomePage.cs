@@ -13,7 +13,6 @@ namespace GitTrends
         public WelcomePage(WelcomeViewModel welcomeViewModel, AnalyticsService analyticsService) : base("Welcome!", welcomeViewModel, analyticsService, false)
         {
 
-            //Remove BaseContentPageBackground
             var absoluteLayout = new StackLayout()
             {
                 Padding = 150,
@@ -27,26 +26,37 @@ namespace GitTrends
             carouselView.SetBinding(ItemsView.ItemsSourceProperty, "Sections");
             carouselView.ItemTemplate = new DataTemplate(() =>
             {
+                // Title
                 Label nameLabel = new Label () {
                     FontSize = 24,
                     HorizontalOptions = LayoutOptions.Center,
+                    FontAttributes = FontAttributes.Bold,
                 };
                 nameLabel.SetBinding(Label.TextProperty, "Header");
 
-                Image image = new Image { HorizontalOptions = LayoutOptions.Center };
+                // Image
+                Image image = new Image {
+                    MinimumHeightRequest = 40,
+                    MinimumWidthRequest = 40,
+                    HorizontalOptions = LayoutOptions.Center,
+                    
+                };
                 image.SetBinding(Image.SourceProperty, "ImageUrl");
 
-                //Label locationLabel = new Label { ... };
-                //locationLabel.SetBinding(Label.TextProperty, "Location");
-
-                Label contentsLabel = new Label { HorizontalOptions = LayoutOptions.CenterAndExpand };
+                // Content
+                Label contentsLabel = new Label { 
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    FontSize = 15,
+                };
                 contentsLabel.SetBinding(Label.TextProperty, "Content");
 
                 
 
                 StackLayout rootStackLayout = new StackLayout
                 {
+                    Spacing = 15,
                     Children = { nameLabel, image, contentsLabel }
+                    
                 };
                 Frame frame = new Frame()
                 {
