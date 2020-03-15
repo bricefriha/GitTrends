@@ -33,23 +33,20 @@ namespace GitTrends
                 };
                 nameLabel.SetBinding(Label.TextProperty, "Header");
 
-                //Image image = new Image { ... };
-                //image.SetBinding(Image.SourceProperty, "ImageUrl");
+                Image image = new Image { HorizontalOptions = LayoutOptions.Center };
+                image.SetBinding(Image.SourceProperty, "ImageUrl");
 
                 //Label locationLabel = new Label { ... };
                 //locationLabel.SetBinding(Label.TextProperty, "Location");
 
-                //Label detailsLabel = new Label { ... };
-                //detailsLabel.SetBinding(Label.TextProperty, "Details");
+                Label contentsLabel = new Label { HorizontalOptions = LayoutOptions.CenterAndExpand };
+                contentsLabel.SetBinding(Label.TextProperty, "Content");
 
-                //StackLayout stackLayout = new StackLayout
-                //{
-                //    Children = { nameLabel, image, locationLabel, detailsLabel }
-                //};
+                
 
                 StackLayout rootStackLayout = new StackLayout
                 {
-                    Children = { nameLabel }
+                    Children = { nameLabel, image, contentsLabel }
                 };
                 Frame frame = new Frame()
                 {

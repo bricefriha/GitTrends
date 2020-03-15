@@ -42,44 +42,24 @@ namespace GitTrends
         }
         public WelcomeViewModel(AnalyticsService analyticsService) : base(analyticsService)
         {
-            //_carouselItems = new ObservableCollection<StackLayout>()
-            //{
-            //    new StackLayout
-            //    {
-            //        Orientation = StackOrientation.Vertical,
-            //        VerticalOptions = LayoutOptions.Center,
-            //        HorizontalOptions = LayoutOptions.Center,
-
-            //        Children =
-            //        {
-            //            new Label
-            //            {
-            //                Text = "Welcome on GitTrend",
-            //                VerticalOptions = LayoutOptions.Center,
-            //                FontSize = 45,
-                            
-            //            }
-            //        }
-            //    }
-            //};
 
             _sections = new ObservableCollection<Section>()
             {
                 new Section
                 {
                     Header = "Welcome on GitTrend",
+                    ImageUrl = "GitTrends.png",
+                    Content = "GitTrends is a tool allowing you to keep track of your Github repos." +
+                                " With it, you can now stay on top of which repos are trending and ensure its code doesn't go stale!",
                 },
                 new Section
                 {
-                    Header = "Repo Traffic",
+                    Header = "How to use the charts",
+                    ImageUrl = "",
                 },
                 new Section
                 {
                     Header = "Referring Sites",
-                },
-                new Section
-                {
-                    Header = "GitHub Login",
                 }
             };
         }
