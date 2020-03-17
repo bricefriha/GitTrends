@@ -13,7 +13,6 @@ namespace GitTrends.iOS
     {
         public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
-            global::Xamarin.Forms.Forms.SetFlags("CarouselView_Experimental");
             global::Xamarin.Forms.Forms.Init();
 
             Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();

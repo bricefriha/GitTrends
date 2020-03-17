@@ -12,13 +12,14 @@ namespace GitTrends
     {
         public WelcomePage(WelcomeViewModel welcomeViewModel, AnalyticsService analyticsService) : base("Welcome!", welcomeViewModel, analyticsService, false)
         {
+            ViewModel.GitHubLoginUrlRetrieved += HandleGitHubLoginUrlRetrieved;
 
             var absoluteLayout = new StackLayout()
             {
                 Padding = 150,
             };
 
-            // instanciate the carousel view
+            // set the carousel view
             CarouselView carouselView = new CarouselView() 
             {
                 PeekAreaInsets = 50,
@@ -50,14 +51,19 @@ namespace GitTrends
                 };
                 contentsLabel.SetBinding(Label.TextProperty, "Content");
 
-                
+                // View to sign in with github account
+                ContentView gitHubSettingsView = new ContentView();
+
+                gitHubSettingsView.SetBinding(ContentView.ContentProperty, "ActionView");
+
 
                 StackLayout rootStackLayout = new StackLayout
                 {
                     Spacing = 15,
-                    Children = { nameLabel, image, contentsLabel }
+                    Children = { nameLabel, image, contentsLabel, gitHubSettingsView }
                     
                 };
+
                 Frame frame = new Frame()
                 {
                     Margin = 8,
@@ -73,6 +79,15 @@ namespace GitTrends
 
 
             Content = carouselView;
+        }
+
+
+        async void HandleGitHubLoginUrlRetrieved(object sender, string? loginUrl)
+        {
+            if (!string.IsNullOrWhiteSpace(loginUrl))
+                await OpenBrowser(loginUrl);
+            else
+                await DisplayAlert("Error", "Couldn't connect to GitHub Login. Check your internet connection and try again", "OK");
         }
     }
 }
