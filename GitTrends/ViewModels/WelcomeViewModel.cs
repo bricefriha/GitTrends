@@ -93,18 +93,26 @@ namespace GitTrends
             {
                 new Section
                 {
-                    Header = "Welcome on GitTrend",
+                    Header = "Welcome to GitTrends",
                     ImageUrl = "GitTrends.png",
-                    Content = "GitTrends is a tool allowing you to keep track of your Github repos." +
-                                " With it, you can now stay on top of which repos are trending and ensure its code doesn't go stale!",
+                    Content = "GitTrends helps you to monitor your GitHub Repos:\n\n" +
+                                " ✅ Connect to GitHub\n" +
+                                " ✅ Monitor GitHub Repo Views\n" +
+                                " ✅ Monitor GitHub Repo Clones\n" +
+                                " ✅ Discover Referring Sites\n"
                 },
                 new Section
                 {
                     Header = "Get an overview of your repos!",
                     ImageUrl = "https://user-images.githubusercontent.com/13558917/75208368-5091ca80-5730-11ea-8602-8c63244bf229.gif",
                     Content = "Here you can get charts which show all traffics on your repos:\n\n" +
-                                " - Zoom in/out to see accurately what you need to know\n\n" +
-                                " - A long press on the chart allow you to see a precise numeric value ",
+                                " 💠 Zoom in/out to see accurately what you need to know\n\n" +
+                                " 💠 A long press on the chart allow you to see a precise numeric value ",
+                },
+                new Section
+                {
+                    Header = "Enable Push Notifications",
+                    Content = "GitTrends will notify you when your GitHub repositories are receiving more traffic than usual. Tap here to be notified about trending repos",
                 },
                 new Section
                 {
