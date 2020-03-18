@@ -14,26 +14,27 @@ namespace GitTrends
         {
             ViewModel.GitHubLoginUrlRetrieved += HandleGitHubLoginUrlRetrieved;
 
-            var absoluteLayout = new StackLayout()
+            var mainLayout = new StackLayout
             {
-                Padding = 150,
+                //Padding = 150,
+                Visual = VisualMarker.Material,
+                VerticalOptions = LayoutOptions.Fill,
+                Spacing = 1,
+                
             };
-
             // set the carousel view
-            CarouselView carouselView = new CarouselView() 
-            {
-                PeekAreaInsets = 50,
-            };
+            CarouselView carouselView = new CarouselView();
             carouselView.SetBinding(ItemsView.ItemsSourceProperty, "Sections");
             carouselView.ItemTemplate = new DataTemplate(() =>
             {
                 // Title
-                Label nameLabel = new Label () {
+                Label titleLabel = new Label () {
                     FontSize = 24,
                     HorizontalOptions = LayoutOptions.Center,
                     FontAttributes = FontAttributes.Bold,
                 };
-                nameLabel.SetBinding(Label.TextProperty, "Header");
+                titleLabel.SetBinding(Label.TextProperty, nameof(Section.Header));
+                titleLabel.SetDynamicResource(Label.TextColorProperty, nameof(BaseTheme.TextColor));
 
                 // Image
                 Image image = new Image {
@@ -42,43 +43,65 @@ namespace GitTrends
                     HorizontalOptions = LayoutOptions.Center,
                     
                 };
-                image.SetBinding(Image.SourceProperty, "ImageUrl");
+                image.SetBinding(Image.SourceProperty, nameof(Section.ImageUrl));
 
                 // Content
                 Label contentsLabel = new Label { 
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     FontSize = 15,
                 };
-                contentsLabel.SetBinding(Label.TextProperty, "Content");
+                contentsLabel.SetBinding(Label.TextProperty, nameof(Section.Content));
+                contentsLabel.SetDynamicResource(Label.TextColorProperty, nameof(BaseTheme.TextColor));
 
                 // View to sign in with github account
                 ContentView gitHubSettingsView = new ContentView();
 
-                gitHubSettingsView.SetBinding(ContentView.ContentProperty, "ActionView");
+                gitHubSettingsView.SetBinding(ContentView.ContentProperty, nameof(Section.ActionView));
 
 
-                StackLayout rootStackLayout = new StackLayout
+                StackLayout contentStackLayout = new StackLayout
                 {
                     Spacing = 15,
-                    Children = { nameLabel, image, contentsLabel, gitHubSettingsView }
-                    
+                    Children = { titleLabel, image, contentsLabel, gitHubSettingsView }
+
                 };
 
                 Frame frame = new Frame()
                 {
                     Margin = 8,
-                    HeightRequest = 480,
-                    Content = rootStackLayout,
-                    BackgroundColor = Color.White,
+                    HeightRequest = 600,
+                    Content = contentStackLayout,
+                    CornerRadius = 10,
+
+                };
+                frame.SetDynamicResource(Frame.BackgroundColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+
+                StackLayout rootStackLayout = new StackLayout
+                {
+                    Children = { frame },
+                    VerticalOptions = LayoutOptions.Center,
+                    
                 };
 
-                return frame;
+                return rootStackLayout;
             });
 
-            absoluteLayout.Children.Add (carouselView);
+            mainLayout.Children.Add (carouselView);
 
+            var skipButton = new Button()
+            {
+                Text = "Skip the introduction",
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.Start,
+                CornerRadius = 200,
+                Margin = 10,
+            };
+            skipButton.SetDynamicResource(Button.BackgroundColorProperty, nameof(BaseTheme.NavigationBarTextColor));
+            skipButton.SetDynamicResource(Button.TextColorProperty, nameof(BaseTheme.TextColor));
 
-            Content = carouselView;
+            // Add a skip button 
+            mainLayout.Children.Add (skipButton);
+            Content = mainLayout;
         }
 
 

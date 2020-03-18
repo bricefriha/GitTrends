@@ -84,8 +84,10 @@ namespace GitTrends
                 MainThread.InvokeOnMainThreadAsync(LoginButtonCommand.RaiseCanExecuteChanged).SafeFireAndForget(ex => Debug.WriteLine(ex));
             });
         }
-        public WelcomeViewModel(AnalyticsService analyticsService) : base(analyticsService)
+        public WelcomeViewModel (AnalyticsService analyticsService) : base(analyticsService)
         {
+            LoginButtonCommand = new AsyncCommand(ExecuteLoginButtonCommand, _ => !IsAuthenticating);
+            DemoButtonCommand = new Command(ExecuteDemoButtonCommand);
 
             _sections = new ObservableCollection<Section>()
             {
